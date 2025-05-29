@@ -63,8 +63,7 @@ class GATreeClassifier(ClassifierMixin, GATree):
         """
         return 1 - accuracy_score(root.y_true, root.y_pred) + (0.002 * root.size())
 
-    def fit(self, X, y, population_size=150, max_iter=2000, mutation_probability=0.1, elite_size=1,
-            selection_tournament_size=2, fitness_function_kwargs={}):
+    def fit(self, X, y, population_size=150, max_iter=2000, mutation_probability=0.1, elite_size=1, selection_tournament_size=2, fitness_function_kwargs={}, initial_population=None):
         """
         Fit a tree to a training set. The population size, maximum iterations, mutation probability, elite size, and selection tournament size can be specified.
 
@@ -90,8 +89,23 @@ class GATreeClassifier(ClassifierMixin, GATree):
         self.class_count = len(self.att_values[-1])
 
         # Generation of initial population
-        node = Node()
-        population = []
+        print(">>> Custom fit() mit initial_population aktiv!")
+
+        if initial_population is not None:
+            assert len(initial_population) == population_size, "Length of initial_population must match population_size"
+            population = initial_population
+        else:
+            node = Node()
+            population = []
+            for _ in range(population_size):
+                population.append(node.make_node(
+                    max_depth=self.max_depth,
+                    random=self.random,
+                    att_indexes=self.att_indexes,
+                    att_values=self.att_values,
+                    class_count=self.class_count
+                ))
+
         for _ in range(population_size):
             population.append(node.make_node(max_depth=self.max_depth, random=self.random,
                               att_indexes=self.att_indexes, att_values=self.att_values, class_count=self.class_count))
