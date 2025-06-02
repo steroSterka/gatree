@@ -109,9 +109,9 @@ class GATreeClassifier(ClassifierMixin, GATree):
                     class_count=self.class_count
                 ))
 
-        for _ in range(population_size):
-            population.append(node.make_node(max_depth=self.max_depth, random=self.random,
-                              att_indexes=self.att_indexes, att_values=self.att_values, class_count=self.class_count))
+        #for _ in range(population_size):
+            #population.append(node.make_node(max_depth=self.max_depth, random=self.random,
+                              #att_indexes=self.att_indexes, att_values=self.att_values, class_count=self.class_count))
 
         for i in range(max_iter+1):
             # Clear previous evaluation
