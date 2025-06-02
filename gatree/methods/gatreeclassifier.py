@@ -90,6 +90,9 @@ class GATreeClassifier(ClassifierMixin, GATree):
 
         # Generation of initial population
         print(">>> Custom fit() mit initial_population aktiv!")
+        print(f"initial_population is None? {initial_population is None}")
+        print(f"initial_population length: {len(initial_population) if initial_population is not None else 'N/A'}")
+
 
         if initial_population is not None:
             assert len(initial_population) == population_size, "Length of initial_population must match population_size"
